@@ -1,5 +1,6 @@
 import { FC, ReactNode } from 'react'
 import Head from "next/head"
+import { Navbar } from '../ui';
 
 interface Props {
     children: ReactNode;
@@ -23,9 +24,10 @@ export const ShopLayout: FC<Props> = ({ children, title, pageDescription, imageF
                         <meta name='og:image' content={imageFullUrl} />
                     )
                 }
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             <nav>
-                {/* TODO:Navbar */}
+                <Navbar />
             </nav>
             {/* TODO:Sidebar */}
             <main style={{

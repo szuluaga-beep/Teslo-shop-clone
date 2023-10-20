@@ -25,7 +25,11 @@ export const lightTheme = createTheme({
             styleOverrides: {
                 root: {
                     backgroundColor: 'white',
-                    height: 60
+                    height: 60,
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    justifyContent:'space-around'
                 }
             }
         },
@@ -53,8 +57,11 @@ export const lightTheme = createTheme({
             },
             styleOverrides: {
                 root: {
+                    backgroundColor:'white',
+                    color:'#000',
                     textTransform: 'none',
                     boxShadow: 'none',
+                    fontWeight:'bold',
                     borderRadius: 10,
                     ":hover": {
                         backgroundColor: 'rgba(0,0,0,0.05)',
