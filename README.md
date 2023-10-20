@@ -1,4 +1,4 @@
-## Clone de Teslo Shop
+## Clone de Teslo Shop - Compras
 
 
 Abre la página oficial de teslo shop [Teslo-Shop](https://shop.tesla.com/)
