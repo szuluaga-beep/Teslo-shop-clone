@@ -2,6 +2,7 @@ import React from 'react'
 import { Grid, Typography, Box, Button, Chip } from '@mui/material'
 import { ShopLayout } from '../../../components/layout'
 import { initialData } from '../../../database/products'
+import { ProductSlideShow } from '../../../components/products'
 
 const product = initialData.products[0]
 
@@ -10,7 +11,7 @@ const ProductPage = () => {
         <ShopLayout title={product.title} pageDescription={product.description}>
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={7}>
-
+                    <ProductSlideShow images={product.images}/>
                 </Grid>
                 <Grid item xs={12} sm={5}>
                     <Typography variant='h1' component={'h1'}>
