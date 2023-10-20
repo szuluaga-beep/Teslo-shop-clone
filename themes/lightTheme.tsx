@@ -8,6 +8,9 @@ export const lightTheme = createTheme({
         },
         secondary: {
             main: '#3A64D8'
+        },
+        info: {
+            main: '#fff'
         }
     },
     components: {
@@ -29,7 +32,7 @@ export const lightTheme = createTheme({
                     display: 'flex',
                     alignItems: 'center',
                     flexDirection: 'row',
-                    justifyContent:'space-around'
+                    justifyContent: 'space-around'
                 }
             }
         },
@@ -53,15 +56,14 @@ export const lightTheme = createTheme({
             defaultProps: {
                 variant: 'contained',
                 size: 'small',
-                disableElevation: true
+                disableElevation: true,
+                color: 'info'
             },
             styleOverrides: {
                 root: {
-                    backgroundColor:'white',
-                    color:'#000',
                     textTransform: 'none',
                     boxShadow: 'none',
-                    fontWeight:'bold',
+                    fontWeight: 'bold',
                     borderRadius: 10,
                     ":hover": {
                         backgroundColor: 'rgba(0,0,0,0.05)',

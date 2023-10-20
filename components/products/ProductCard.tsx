@@ -1,6 +1,7 @@
 import React, { FC, useState, useMemo } from 'react'
 import { Card, CardActionArea, CardMedia, Grid, Box, Typography } from '@mui/material'
 import { IProducts } from '../../interfaces'
+import Link from 'next/link'
 
 interface Props {
   product: IProducts
@@ -21,15 +22,17 @@ export const ProductCard: FC<Props> = ({ product }) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <Card>
-        <CardActionArea>
-          <CardMedia
-            component={'img'}
-            image={productImage}
-            className='fadeIn'
-            alt={product.title}
+        <Link href='/products/slug' passHref legacyBehavior prefetch={false}>
+          <CardActionArea>
+            <CardMedia
+              component={'img'}
+              image={productImage}
+              className='fadeIn'
+              alt={product.title}
             // onLoad={(e) => console.log("cargo")}
-          />
-        </CardActionArea>
+            />
+          </CardActionArea>
+        </Link>
       </Card>
       <Box sx={{ mt: 1 }} className='fadeIn'>
         <Typography fontWeight={700}>{product.title}</Typography>
