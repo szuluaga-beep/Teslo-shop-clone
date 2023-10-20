@@ -55,7 +55,7 @@ export const Navbar = () => {
 
             </NavLink>
             <Button>
-                Menu
+                Menú
             </Button>
         </AppBar>
     )
