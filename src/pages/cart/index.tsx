@@ -7,9 +7,9 @@ const CartPage = () => {
     return (
         <ShopLayout title='Carrito' pageDescription='En esta página encontrás los artículos del carrito'>
             <Typography variant='h1' component='h1'>Carrito</Typography>
-            <Grid container>
+            <Grid container sx={{ mt: 2 }}>
                 <Grid xs={12} sm={7}>
-                    <CartList/>
+                    <CartList />
                 </Grid>
                 <Grid xs={12} sm={5}>
                     <Card className='summary-card'>
