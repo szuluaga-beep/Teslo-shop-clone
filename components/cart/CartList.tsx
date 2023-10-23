@@ -34,7 +34,7 @@ export const CartList: FC<Props> = ({ editable = false }) => {
                             </Link>
 
                         </Grid>
-                        <Grid xs={7} sx={{ ml: 2 }}>
+                        <Grid xs={7} sx={{ padding: 1 }}>
                             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                 <Typography variant="body1">{product.title}</Typography>
                                 <Typography variant="body1">Talla: <strong>M</strong></Typography>
