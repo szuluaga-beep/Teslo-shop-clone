@@ -3,19 +3,28 @@ import { AuthLayout } from '../../../components/layout'
 import { Box, Button, Grid, TextField, Typography, Link as LinkMaterial } from '@mui/material'
 import Link from 'next/link'
 
-const LoginPage = () => {
+const RegisterPage = () => {
     return (
-        <AuthLayout title='Ingresar'>
+        <AuthLayout title='Registrarse'>
             <Box sx={{ width: '350px', padding: '10px 20px' }}>
                 <Grid container spacing={4}>
                     <Grid item xs={12}>
-                        <Typography variant='h1' component={'h1'}>Iniciar sesión</Typography>
+                        <Typography variant='h1' component={'h1'}>
+                            Registrarse
+                        </Typography>
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
-                            label="correo"
-                            variant='filled'
+                            label="Nombre completo"
+                            variant='outlined'
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            label="Correo"
+                            type='email'
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -27,21 +36,20 @@ const LoginPage = () => {
                     </Grid>
                     <Grid item xs={12}>
                         <Button color='secondary' className='circular-btn' size='large' fullWidth>
-                            Ingresar
+                            Registrarse
                         </Button>
                     </Grid>
                     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end' }}>
-                        <Link href='/auth/register' passHref legacyBehavior>
+                        <Link href='/auth/login' passHref legacyBehavior>
                             <LinkMaterial underline='always'>
-                                ¿No tienes cuenta?
+                                ¿Ya tienes cuenta?
                             </LinkMaterial>
                         </Link>
                     </Grid>
                 </Grid>
             </Box>
-
         </AuthLayout>
     )
 }
 
-export default LoginPage
+export default RegisterPage
