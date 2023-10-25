@@ -14,7 +14,8 @@ const LoginPage = () => {
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
-                            label="correo"
+                            label="Correo"
+                            type='email'
                             variant='filled'
                         />
                     </Grid>
