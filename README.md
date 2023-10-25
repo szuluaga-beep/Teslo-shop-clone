@@ -11,8 +11,20 @@ docker-compose up -d
 
 - El -d, significa _detached_
 
-###MongoDB URL Local:
+##MongoDB URL Local:
 
 ```
-mongodb://localhost:27017/teslodb
+MONGO_URL=mongodb://localhost:27017/teslodb
 ```
+
+#Configurar las variables de entorno
+Renombrar el archivo _.en.tempplate_ a _.env_
+* Reconstruir los módulos de node y levantar next
+
+``
+npm install
+yarn install
+
+npm run dev
+yarn dev
+``
