@@ -1,4 +1,4 @@
-export interface IProducts {
+export interface IProduct {
     _id: string;
     description: string;
     images: string[];
@@ -10,6 +10,8 @@ export interface IProducts {
     title: string;
     type: ITypes;
     gender: 'men' | 'women' | 'kid' | 'unisex'
+
+    //TODO: Agregar CreatedAt y UpdatedAt
 }
 
 export type ISizes = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
