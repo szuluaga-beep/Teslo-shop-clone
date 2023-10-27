@@ -3,16 +3,13 @@ import { Typography, Grid, Card, CardActionArea, CardMedia, CircularProgress } f
 import { ShopLayout } from '../../components/layout'
 import { initialData } from '../../database/products'
 import { ProductList } from '../../components/products'
+import { useProducts } from '../../hooks'
 
-import useSWR from 'swr'
 
-const fetcher = (...args: [key: string]) => fetch(...args).then(res => res.json())
 
 const HomePage: NextPage = () => {
-  const { data, error, isLoading } = useSWR('/api/products', fetcher)
 
-  if (error) return <div>failed to load</div>
-  if (isLoading) return <CircularProgress />
+  const { products, isLoading } = useProducts("products")
 
 
   // console.log(data)
@@ -22,10 +19,14 @@ const HomePage: NextPage = () => {
       <Typography variant="h2" sx={{ mb: 1 }}>
         Todos los productos
       </Typography>
+      {
+        isLoading
+          ? <CircularProgress />
+          : <ProductList
+            products={products}
+          />
 
-      <ProductList
-        products={data}
-      />
+      }
     </ShopLayout>
   )
 }
