@@ -1,9 +1,9 @@
 import { NextPage } from 'next'
-import { Typography, Grid, Card, CardActionArea, CardMedia, CircularProgress } from '@mui/material'
+import { Typography } from '@mui/material'
 import { ShopLayout } from '../../components/layout'
-import { initialData } from '../../database/products'
 import { ProductList } from '../../components/products'
 import { useProducts } from '../../hooks'
+import { FullScreenLoading } from '../../components/ui'
 
 
 
@@ -21,7 +21,7 @@ const HomePage: NextPage = () => {
       </Typography>
       {
         isLoading
-          ? <CircularProgress />
+          ? <FullScreenLoading />
           : <ProductList
             products={products}
           />
