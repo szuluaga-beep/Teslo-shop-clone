@@ -7,7 +7,7 @@ import { ProductList } from '../../../components/products'
 
 const KidProductsPage = () => {
     const { products, isLoading } = useProducts("products?gender=kid")
-    console.log(products)
+    
     return (
         <ShopLayout title='Kid Products' pageDescription='Encuentra los mejores productos de niños Aquí'>
             <Typography variant='h1' component={'h1'}>Kid</Typography>

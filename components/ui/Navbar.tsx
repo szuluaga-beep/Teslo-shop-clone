@@ -3,14 +3,17 @@ import { AppBar, Toolbar, Typography, Box, Button, IconButton, Badge } from '@mu
 
 import { SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 
 export const Navbar = () => {
+    const { asPath } = useRouter()
+
     return (
         <AppBar>
             <Toolbar>
                 <Link legacyBehavior href="/">
-                    <a style={{ textDecoration: 'none', color: '#000', fontWeight: 'bold',  alignItems: 'center', display: 'flex' }}>
+                    <a style={{ textDecoration: 'none', color: '#000', fontWeight: 'bold', alignItems: 'center', display: 'flex' }}>
                         <Typography variant='h6'>
                             Inicio |
                         </Typography>
@@ -24,7 +27,7 @@ export const Navbar = () => {
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                 <Link legacyBehavior passHref href='/category/men'>
                     <a>
-                        <Button>
+                        <Button color={asPath === '/category/men' ? 'primary' : 'info'}>
                             Hombres
                         </Button>
                     </a>
@@ -32,7 +35,7 @@ export const Navbar = () => {
                 </Link>
                 <Link legacyBehavior passHref href='/category/women'>
                     <a>
-                        <Button>
+                        <Button color={asPath === '/category/women' ? 'primary' : 'info'}>
                             Mujeres
                         </Button>
                     </a>
@@ -40,7 +43,7 @@ export const Navbar = () => {
                 </Link>
                 <Link legacyBehavior passHref href='/category/kid'>
                     <a>
-                        <Button>
+                        <Button color={asPath === '/category/kid' ? 'primary' : 'info'}>
                             Niños
                         </Button>
                     </a>
