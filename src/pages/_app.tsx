@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app'
 import { Roboto } from 'next/font/google'
 import { lightTheme } from '../../themes'
 import { SWRConfig, useSWRConfig } from 'swr'
+import { UiProvider } from '../../context'
 
 
 const roboto = Roboto({
@@ -18,13 +19,15 @@ export default function App({ Component, pageProps }: AppProps) {
         fetcher: (resource, init) => fetch(resource, init).then(res => res.json())
       }}
     >
+      <UiProvider>
 
-      <ThemeProvider theme={lightTheme}>
-        <main className={roboto.className}>
-          <CssBaseline />
-          <Component {...pageProps} />
-        </main>
-      </ThemeProvider>
+        <ThemeProvider theme={lightTheme}>
+          <main className={roboto.className}>
+            <CssBaseline />
+            <Component {...pageProps} />
+          </main>
+        </ThemeProvider>
+      </UiProvider>
     </SWRConfig>
   )
 }
