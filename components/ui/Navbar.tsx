@@ -38,7 +38,7 @@ export const Navbar = () => {
                     </a>
 
                 </Link>
-                <Link legacyBehavior passHref href='/category/kids'>
+                <Link legacyBehavior passHref href='/category/kid'>
                     <a>
                         <Button>
                             Niños
