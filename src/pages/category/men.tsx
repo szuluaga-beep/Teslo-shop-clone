@@ -12,7 +12,7 @@ const MenProductsPage = () => {
         <ShopLayout title='Men Products' pageDescription='Encuentra los mejores productos de hombres Aquí'>
             <Typography variant='h1' component={'h1'}>Men</Typography>
             <Typography variant="h2" sx={{ mb: 1 }}>
-                Todos los productos de niños
+                Todos los productos de hombres
             </Typography>
             {
                 isLoading
