@@ -7,7 +7,7 @@ import { FullScreenLoading, ItemCounter, SizesItems } from '../../../components/
 import { useRouter } from 'next/router'
 import { useProducts } from '../../../hooks'
 import { IProduct } from '../../../interfaces'
-import { GetServerSideProps, NextPage } from 'next'
+import { GetServerSideProps, GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { dbProduct } from '../../../database'
 
 interface Props {
@@ -70,10 +70,51 @@ const ProductPage: NextPage<Props> = ({ product }) => {
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-    const { slug = '' } = params as { slug: string }
+// getStaticPaths
+// getStaticProps
 
+// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+//     const { slug = '' } = params as { slug: string }
+
+//     const product = await dbProduct.getProductBySlug(slug)
+
+//     if (!product) {
+//         return {
+//             redirect: {
+//                 destination: '/',
+//                 permanent: false
+//             }
+//         }
+//     }
+//     return {
+//         props: {
+//             product
+//         }
+//     }
+// }
+export const getStaticPaths: GetStaticPaths = async () => {
+    const productsSlugs = await dbProduct.getAllProductSlugs()
+    // console.log(productsSlugs)
+
+    return {
+        // paths:[],
+        // fallback:'blocking'
+        paths: productsSlugs.map(({ slug }) => ({
+            params: {
+                slug
+            }
+        })),
+        fallback: 'blocking',
+    }
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    // console.log(params)
+
+    const { slug = '' } = params as { slug: string }
+    // console.log(slug)
     const product = await dbProduct.getProductBySlug(slug)
+
 
     if (!product) {
         return {
@@ -86,8 +127,10 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     return {
         props: {
             product
-        }
+        },
+        revalidate: 60 * 60 * 24
     }
 }
+
 
 export default ProductPage
