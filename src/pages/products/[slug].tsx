@@ -3,11 +3,33 @@ import { Grid, Typography, Box, Button, Chip } from '@mui/material'
 import { ShopLayout } from '../../../components/layout'
 import { initialData } from '../../../database/products'
 import { ProductSlideShow } from '../../../components/products'
-import { ItemCounter, SizesItems } from '../../../components/ui'
+import { FullScreenLoading, ItemCounter, SizesItems } from '../../../components/ui'
+import { useRouter } from 'next/router'
+import { useProducts } from '../../../hooks'
+import { IProduct } from '../../../interfaces'
+import { GetServerSideProps, NextPage } from 'next'
+import { dbProduct } from '../../../database'
 
-const product = initialData.products[0]
+interface Props {
+    product: IProduct
+}
 
-const ProductPage = () => {
+const ProductPage: NextPage<Props> = ({ product }) => {
+    // const router = useRouter()
+
+    // const { products: product, isLoading } = useProducts<IProduct>(`/products/${router.query.slug}`)
+
+    // if (isLoading) {
+    //     return(
+    //         <FullScreenLoading/>
+    //     )
+    // }
+
+    // if (!product) {
+    //     return(
+    //         <h1>Producto no existe</h1>
+    //     )
+    // }
     return (
         <ShopLayout title={product.title} pageDescription={product.description}>
             <Grid container spacing={3}>
@@ -46,6 +68,26 @@ const ProductPage = () => {
             </Grid>
         </ShopLayout>
     )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+    const { slug = '' } = params as { slug: string }
+
+    const product = await dbProduct.getProductBySlug(slug)
+
+    if (!product) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+    return {
+        props: {
+            product
+        }
+    }
 }
 
 export default ProductPage
