@@ -1,22 +1,35 @@
-import React, { useContext } from 'react'
-import { AppBar, Toolbar, Typography, Box, Button, IconButton, Badge } from '@mui/material'
+import React, { useContext, useState } from 'react'
+import { AppBar, Toolbar, Typography, Box, Button, IconButton, Badge, Input, InputAdornment } from '@mui/material'
 
-import { SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material'
+import { ClearOutlined, SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { UiContext } from '../../context'
 
 
 export const Navbar = () => {
-    const { asPath } = useRouter()
+    const { asPath, push } = useRouter()
 
     const { toogleSiMenu } = useContext(UiContext)
+
+    const [searchTerm, setSearchTerm] = useState('')
+    const [isSearchVisible, setIsSearchVisible] = useState(false)
+
+    const onSearchTerm = () => {
+        // toogleSiMenu()
+        if (searchTerm.trim().length === 0) return
+        push(`/search/${searchTerm}`)
+        setSearchTerm('')
+    }
+
+
 
     return (
         <AppBar>
             <Toolbar>
                 <Link legacyBehavior href="/">
-                    <a style={{ textDecoration: 'none', color: '#000', fontWeight: 'bold', alignItems: 'center', display: 'flex' }}>
+                    <a style={{ textDecoration: 'none', color: '#000',
+                     fontWeight: 'bold', alignItems: 'center', display: 'flex' }}>
                         <Typography variant='h6'>
                             Inicio |
                         </Typography>
@@ -27,7 +40,10 @@ export const Navbar = () => {
                 </Link>
             </Toolbar>
 
-            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+            <Box
+                sx={{ display: isSearchVisible ? 'none' : { xs: 'none', sm: 'block' } }}
+                className='fadeIn'
+            >
                 <Link legacyBehavior passHref href='/category/men'>
                     <a>
                         <Button color={asPath === '/category/men' ? 'primary' : 'info'}>
@@ -52,9 +68,45 @@ export const Navbar = () => {
                     </a>
                 </Link>
             </Box>
-            <IconButton>
+
+            {
+                isSearchVisible
+                    ? (
+                        <Input
+                            className='fadeIn'
+                            autoFocus
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onKeyDown={(e) => e.code === 'Enter' ? onSearchTerm() : null}
+                            type='text'
+                            placeholder="Buscar..."
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={() => setIsSearchVisible(false)}
+                                    >
+                                        <ClearOutlined />
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                        />
+                    )
+                    : (
+                        <IconButton 
+                        sx={{ display: { xs: 'none', sm: 'flex' } }}
+                        onClick={() => setIsSearchVisible(true)}>
+                            <SearchOutlined />
+                        </IconButton>
+                    )
+            }
+            <IconButton
+                sx={{ display: { xs: 'flex', sm: 'none' } }}
+                onClick={toogleSiMenu}>
                 <SearchOutlined />
             </IconButton>
+
+
             <Link passHref href="/cart">
                 <Badge badgeContent={2} color='secondary'>
                     <ShoppingCartOutlined />
