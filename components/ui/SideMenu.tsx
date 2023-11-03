@@ -12,10 +12,12 @@ export const SideMenu = () => {
     const [searchTerm, setSearchTerm] = useState('')
 
     const onSearchTerm = () => {
+        // toogleSiMenu()
         if (searchTerm.trim().length === 0) return
         navigateTo(`/search/${searchTerm}`)
+        setSearchTerm('')
     }
-     
+
     const navigateTo = (url: string) => {
         toogleSiMenu()
 
