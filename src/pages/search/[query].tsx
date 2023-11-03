@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 
 import { ShopLayout } from '../../../components/layout'
 import { useProducts } from '../../../hooks'
@@ -10,16 +10,27 @@ import { dbProduct } from '../../../database'
 import { IProduct } from '../../../interfaces'
 
 interface Props {
-    products: IProduct[]
+    products: IProduct[];
+    foundProducts: boolean;
+    query: string
 }
-const SearchPage: NextPage<Props> = ({ products }) => {
+const SearchPage: NextPage<Props> = ({ products, foundProducts, query }) => {
 
     // const { products, isLoading } = useProducts(`/search/shirt`)
     return (
         <ShopLayout title='Teslo shop - search' pageDescription='Página de busqueda en teslo shop'>
             <Typography variant='h1' component='h1'>Buscar producto</Typography>
-            <Typography variant='h2' sx={{ mb: 1 }}>ABC -123</Typography>
 
+            {
+                foundProducts
+                    ? <Typography variant='h2' sx={{ mb: 1 }}>Término: {query}</Typography>
+                    : (
+                        <Box display={'flex'}>
+                            <Typography variant='h2' sx={{ mb: 1 }}>No encontramos ningún producto</Typography>
+                            <Typography variant='h2' sx={{ ml: 1 }} color='secondary'>{query}</Typography>
+                        </Box>
+                    )
+            }
             <ProductList products={products} />
         </ShopLayout>
     )
@@ -38,11 +49,18 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         }
     }
     let products = await dbProduct.getProductsByTerm(query)
-    // console.log(products)
-    //TODO: Retornar otros productos
+
+    const foundProducts = products.length > 0
+
+    if (!foundProducts) {
+        products = await dbProduct.getAllProducts()
+    }
+    
     return {
         props: {
-            products
+            products,
+            foundProducts,
+            query
         }
     }
 }
