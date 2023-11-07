@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Typography, Box, Button, Chip } from '@mui/material'
 import { ShopLayout } from '../../../components/layout'
-import { initialData } from '../../../database/products'
+import { initialData } from '../../../database/seed-data'
 import { ProductSlideShow } from '../../../components/products'
 import { FullScreenLoading, ItemCounter, SizesItems } from '../../../components/ui'
 import { useRouter } from 'next/router'

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Grid, Typography, Link as LinkMaterial, CardActionArea, CardMedia, Box, Button } from "@mui/material"
-import { initialData } from "../../database/products"
+import { initialData } from "../../database/seed-data"
 import Link from "next/link"
 import { ItemCounter } from "../ui"
 
