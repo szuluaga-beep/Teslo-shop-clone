@@ -96,7 +96,9 @@ const LoginPage = () => {
                             </Button>
                         </Grid>
                         <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end' }}>
-                            <Link href='/auth/register' passHref legacyBehavior>
+                            <Link
+                                href={ router.query.p ? `/auth/register?p=${ router.query.p }`: '/auth/register' }
+                                passHref legacyBehavior>
                                 <LinkMaterial underline='always'>
                                     ¿No tienes cuenta?
                                 </LinkMaterial>
