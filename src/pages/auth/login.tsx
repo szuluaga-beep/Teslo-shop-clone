@@ -3,6 +3,7 @@ import { AuthLayout } from '../../../components/layout'
 import { Box, Button, Grid, TextField, Typography, Link as LinkMaterial } from '@mui/material'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
+import { validations } from '../../../utils'
 
 interface FormData {
     email: string;
@@ -14,12 +15,12 @@ const LoginPage = () => {
 
     const { register, formState: { errors }, handleSubmit } = useForm<FormData>()
 
-    const onLoginUser = (data: FormData) => {
-        // console.log({data})
+    const onLoginUser = async (data: FormData) => {
+        console.log({ data })
     }
     return (
         <AuthLayout title='Ingresar'>
-            <form onSubmit={handleSubmit(onLoginUser)}>
+            <form onSubmit={handleSubmit(onLoginUser)} noValidate>
 
                 <Box sx={{ width: '350px', padding: '10px 20px' }}>
                     <Grid container spacing={4}>
@@ -32,7 +33,12 @@ const LoginPage = () => {
                                 label="Correo"
                                 type='email'
                                 variant='filled'
-                                {...register("email")}
+                                {...register("email", {
+                                    required: 'Este campo es requerido',
+                                    validate: validations.isEmail
+                                })}
+                                error={!!errors.email}
+                                helperText={errors.email?.message}
 
                             />
                         </Grid>
@@ -41,7 +47,13 @@ const LoginPage = () => {
                                 fullWidth
                                 label="contraseña"
                                 type='password'
-                                {...register("password")}
+                                {...register("password", {
+                                    required: 'Este campo es requerido',
+                                    minLength: { value: 6, message: 'Minimo de 6 caracteres' }
+                                })}
+                                error={!!errors.password}
+                                helperText={errors.password?.message}
+
                             />
                         </Grid>
                         <Grid item xs={12}>
