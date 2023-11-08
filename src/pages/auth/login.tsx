@@ -18,10 +18,10 @@ interface FormData {
 
 const LoginPage = () => {
 
-    const {loginUser} = useContext(AuthContext)
+    const { loginUser } = useContext(AuthContext)
     const [showError, setShowError] = useState(false)
 
-    const router= useRouter()
+    const router = useRouter()
     const { register, formState: { errors }, handleSubmit } = useForm<FormData>()
 
     const onLoginUser = async ({ email, password }: FormData) => {
@@ -29,9 +29,9 @@ const LoginPage = () => {
         setShowError(false)
 
 
-        const isValidLogin= await loginUser(email,password);
+        const isValidLogin = await loginUser(email, password);
 
-        if(!isValidLogin){
+        if (!isValidLogin) {
             setShowError(true)
             setTimeout(() => {
                 setShowError(false)
@@ -39,10 +39,8 @@ const LoginPage = () => {
             return;
         }
 
-
-        
-        //TODO: Navegar a la pantalla que el usuario estaba
-        router.replace('/')
+        const destination = router.query.p?.toString() || '/';
+        router.replace(destination);
 
     }
     return (

@@ -4,6 +4,7 @@ import axios from "axios";
 import { AuthContext, authReducer } from './';
 import { IUser } from '../../interfaces';
 import { tesloApi } from '../../api';
+import { useRouter } from 'next/router';
 
 
 interface PropsProvider {
@@ -25,6 +26,8 @@ const AUTH_INITIAL_STATE: AuthState = {
 export const AuthProvider: FC<PropsProvider> = ({ children }) => {
 
     const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
+
+    const router= useRouter()
 
     useEffect(() => {
         checkToken()
@@ -90,13 +93,19 @@ export const AuthProvider: FC<PropsProvider> = ({ children }) => {
         }
     }
 
+    const logout=()=>{
+        Cookies.remove("token")
+        router.reload()
+    }
+
     return (
         <AuthContext.Provider value={{
             ...state,
 
             //Metodos
             loginUser,
-            registerUser
+            registerUser,
+            logout
         }}>
             {children}
         </AuthContext.Provider>
