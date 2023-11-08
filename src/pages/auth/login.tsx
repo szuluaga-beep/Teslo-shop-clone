@@ -3,7 +3,9 @@ import { AuthLayout } from '../../../components/layout'
 import { Box, Button, Grid, TextField, Typography, Link as LinkMaterial } from '@mui/material'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
+import axios from "axios";
 import { validations } from '../../../utils'
+import { tesloApi } from '../../../api'
 
 interface FormData {
     email: string;
@@ -15,8 +17,21 @@ const LoginPage = () => {
 
     const { register, formState: { errors }, handleSubmit } = useForm<FormData>()
 
-    const onLoginUser = async (data: FormData) => {
-        console.log({ data })
+    const onLoginUser = async ({ email, password }: FormData) => {
+        // console.log({ data })
+
+        try {
+            const { data } = await tesloApi.post('/user/login', { email, password })
+
+            // console.log(data)
+
+            const { token, user } = data
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                console.log(error.message)
+            }
+        }
+
     }
     return (
         <AuthLayout title='Ingresar'>
