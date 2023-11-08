@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { AuthLayout } from '../../../components/layout'
-import { Box, Button, Grid, TextField, Typography, Link as LinkMaterial } from '@mui/material'
+import { Box, Button, Grid, TextField, Typography, Link as LinkMaterial, Chip } from '@mui/material'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import axios from "axios";
 import { validations } from '../../../utils'
 import { tesloApi } from '../../../api'
+import { ErrorOutline } from '@mui/icons-material'
 
 interface FormData {
     email: string;
@@ -15,10 +16,12 @@ interface FormData {
 
 const LoginPage = () => {
 
+    const [showError, setShowError] = useState(false)
     const { register, formState: { errors }, handleSubmit } = useForm<FormData>()
 
     const onLoginUser = async ({ email, password }: FormData) => {
         // console.log({ data })
+        setShowError(false)
 
         try {
             const { data } = await tesloApi.post('/user/login', { email, password })
@@ -27,10 +30,16 @@ const LoginPage = () => {
 
             const { token, user } = data
         } catch (error) {
+            setShowError(true)
+            setTimeout(() => {
+                setShowError(false)
+            }, 3000);
+
             if (axios.isAxiosError(error)) {
                 console.log(error.message)
             }
         }
+        //TODO: Navegar a la pantalla que el usuario estaba
 
     }
     return (
@@ -41,6 +50,15 @@ const LoginPage = () => {
                     <Grid container spacing={4}>
                         <Grid item xs={12}>
                             <Typography variant='h1' component={'h1'}>Iniciar sesión</Typography>
+
+                            <Chip
+                                label='No reconocemos ese usuario/contraseña'
+                                icon={<ErrorOutline />}
+                                color='error'
+                                className='fadeIn'
+                                sx={{ display: showError ? 'flex' : 'none' }}
+                            />
+
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
