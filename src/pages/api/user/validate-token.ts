@@ -35,7 +35,7 @@ const checkJWT = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     let userId = ''
 
     try {
-        userId = await jwt.isValidToken(token)
+        userId = await jwt.isValidToken(token) || ''
         // console.log(userId)
     } catch (error) {
         res.status(401).json({
@@ -59,7 +59,7 @@ const checkJWT = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     return res.status(200).json(
         {
-            token: jwt.signToken(_id, email),
+            token: await jwt.signToken(_id, email),
             user: {
                 email, role, name
             }

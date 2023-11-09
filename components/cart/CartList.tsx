@@ -19,7 +19,7 @@ export const CartList: FC<Props> = ({ editable = false }) => {
             {
                 productsInCart.map(product => (
                     <Grid container key={product.slug} spacing={2} sx={{ mb: 2 }}>
-                        <Grid xs={3}>
+                        <Grid item xs={3}>
                             {/* TODO: Llevar a la página del producto */}
                             <Link href='/products/slug' legacyBehavior passHref>
                                 <LinkMaterial>
@@ -34,7 +34,7 @@ export const CartList: FC<Props> = ({ editable = false }) => {
                             </Link>
 
                         </Grid>
-                        <Grid xs={7} sx={{ padding: 1 }}>
+                        <Grid item xs={7} sx={{ padding: 1 }}>
                             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                 <Typography variant="body1">{product.title}</Typography>
                                 <Typography variant="body1">Talla: <strong>M</strong></Typography>
@@ -45,7 +45,7 @@ export const CartList: FC<Props> = ({ editable = false }) => {
                                 }
                             </Box>
                         </Grid>
-                        <Grid xs={2} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                        <Grid item xs={2} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                             <Typography variant="subtitle1">{`$${product.price}`}</Typography>
                             {
                                 editable

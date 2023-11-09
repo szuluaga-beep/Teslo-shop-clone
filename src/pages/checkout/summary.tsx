@@ -9,10 +9,10 @@ const SummaryPage = () => {
         <ShopLayout title='Resumen' pageDescription='Resumen de la orden'>
             <Typography variant='h1' component='h1'>Resumen de la orden</Typography>
             <Grid container sx={{ mt: 2 }}>
-                <Grid xs={12} sm={7}>
+                <Grid item xs={12} sm={7}>
                     <CartList />
                 </Grid>
-                <Grid xs={12} sm={5}>
+                <Grid item xs={12} sm={5}>
                     <Card className='summary-card'>
                         <CardContent>
                             <Typography variant='h2'>Resumen (3 Productos)</Typography>

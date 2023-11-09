@@ -1,41 +1,44 @@
-import jwt from "jsonwebtoken";
+import * as jose from "jose";
 
 
-export const signToken = (_id: string, email: string) => {
+const secret = new TextEncoder().encode(
+    process.env.JWT_SECRET_SEED,
+)
+
+export const signToken = async (_id: string, email: string) => {
     if (!process.env.JWT_SECRET_SEED) {
         throw new Error('No hay semilla JWT- ENV')
     }
 
-    return jwt.sign(
-        //payload
-        {
-            _id, email
-        },
-        //seed
-        process.env.JWT_SECRET_SEED,
-        //Opciones
-        { expiresIn: '30d' }
-    )
+    const jwt = await new jose.SignJWT()
+        .setProtectedHeader({ alg: 'HS256' })
+        .setJti(_id)
+        .setSubject(email)
+        .setExpirationTime('30d')
+        .sign(secret)
+
+    return jwt
 }
 
-export const isValidToken = (token: string): Promise<string> => {
+export const isValidToken = async (token: string): Promise<string> => {
     if (!process.env.JWT_SECRET_SEED) {
         throw new Error('No hay semilla JWT- ENV')
     }
     // console.log(token)
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
-            // console.log(token)
-            jwt.verify(token, process.env.JWT_SECRET_SEED || '', (err, payload) => {
-                if (err) return reject('JWT no es válido')
+            const verified = await jose.jwtVerify(
+                token,
+                secret
+            )
+            // console.log(verified.payload)
+            resolve(verified.payload.jti || '')
 
-                const { _id } = payload as { _id: string }
-
-                resolve(_id)
-                // console.log(_id)
-            })
-        } catch (error) {
-            reject('JWT no es válido')
+        } catch (err) {
+            // throw new AuthError('Your token has expired.')
+            reject(new Error('Invalid Token'))
         }
-    })
+    });
+
+
 }
