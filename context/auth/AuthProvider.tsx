@@ -32,7 +32,7 @@ export const AuthProvider: FC<PropsProvider> = ({ children }) => {
 
     useEffect(() => {
         if (status === 'authenticated') {
-            console.log({ user: data.user })
+            // console.log({ user: data.user })
         }
     }, [data, status])
 
