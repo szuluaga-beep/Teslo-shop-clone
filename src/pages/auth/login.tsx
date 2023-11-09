@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
+import { GetServerSideProps } from "next";
 import { AuthLayout } from '../../../components/layout'
 import { Box, Button, Grid, TextField, Typography, Link as LinkMaterial, Chip } from '@mui/material'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
-import axios from "axios";
-import { validations } from '../../../utils'
+import { signIn, getSession } from "next-auth/react"; import { validations } from '../../../utils'
 import { tesloApi } from '../../../api'
 import { ErrorOutline } from '@mui/icons-material'
 import { AuthContext } from '../../../context'
@@ -18,7 +18,7 @@ interface FormData {
 
 const LoginPage = () => {
 
-    const { loginUser } = useContext(AuthContext)
+
     const [showError, setShowError] = useState(false)
 
     const router = useRouter()
@@ -28,19 +28,19 @@ const LoginPage = () => {
         // console.log({ data })
         setShowError(false)
 
+        await signIn('credentials', { email, password })
+        // const isValidLogin = await loginUser(email, password);
 
-        const isValidLogin = await loginUser(email, password);
+        // if (!isValidLogin) {
+        //     setShowError(true)
+        //     setTimeout(() => {
+        //         setShowError(false)
+        //     }, 3000);
+        //     return;
+        // }
 
-        if (!isValidLogin) {
-            setShowError(true)
-            setTimeout(() => {
-                setShowError(false)
-            }, 3000);
-            return;
-        }
-
-        const destination = router.query.p?.toString() || '/';
-        router.replace(destination);
+        // const destination = router.query.p?.toString() || '/';
+        // router.replace(destination);
 
     }
     return (
@@ -97,7 +97,7 @@ const LoginPage = () => {
                         </Grid>
                         <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end' }}>
                             <Link
-                                href={ router.query.p ? `/auth/register?p=${ router.query.p }`: '/auth/register' }
+                                href={router.query.p ? `/auth/register?p=${router.query.p}` : '/auth/register'}
                                 passHref legacyBehavior>
                                 <LinkMaterial underline='always'>
                                     ¿No tienes cuenta?
@@ -110,6 +110,24 @@ const LoginPage = () => {
             </form>
         </AuthLayout>
     )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+    const session = await getSession({ req })
+
+    const { p = '' } = query
+    if (session) {
+        return {
+            redirect: {
+                destination: p.toString(),
+                permanent: false
+            }
+        }
+    }
+
+    return {
+        props: {}
+    }
 }
 
 export default LoginPage
