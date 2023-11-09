@@ -1,5 +1,5 @@
 import { FC, ReactNode, useEffect, useReducer } from 'react';
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { AuthContext, authReducer } from './';
@@ -104,8 +104,9 @@ export const AuthProvider: FC<PropsProvider> = ({ children }) => {
     }
 
     const logout = () => {
-        Cookies.remove("token")
-        router.reload()
+        signOut()
+        // Cookies.remove("token")
+        // router.reload()
     }
 
     return (
